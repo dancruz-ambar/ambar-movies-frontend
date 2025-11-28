@@ -1,0 +1,69 @@
+<main
+  class="w-full flex flex-col items-center justify-center gap-4"
+  style="background-color: #f0f0f0"
+>
+  <header class="bg-[#14191D] p-4 w-full flex flex-row items-center gap-4">
+    <h1 class="w-1/6 text-white text-2xl font-bold">AMBAR MOVIES</h1>
+    <input type="text" class="flex-1 p-2 rounded-md bg-white" placeholder="Buscar pelicula" (input)="onSearch($event)" />
+    <button
+      class="w-1/6 bg-sky-500 text-white px-4 py-2 rounded-md cursor-pointer"
+      (click)="addMovie()"
+    >
+      Agregar pelicula
+    </button>
+  </header>
+  <div class="container mx-auto flex flex-col gap-4 w-full p-4">
+    <div class="flex flex-row justify-between">
+      <h2 class="text-2xl font-bold">ÚLTIMAS PELÍCULAS</h2>
+      <div>
+        Ordenar por:
+        <select class="w-40 p-2 rounded-md bg-white" (change)="sortMovies($event)">
+          <option value="default" selected disabled>Seleccionar...</option>
+          <option value="title">Titulo</option>
+          <option value="releaseDate">Estreno</option>
+          <option value="duration">Duracion</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4 justify-items-center">
+      <app-movie-card
+        *ngFor="let item of movies"
+        [movie]="item"
+        (movieSelected)="selectMovie(item)"
+        (deleteMovie)="handleDeleteMovie(item)"
+        (editMovie)="editMovie(item)"
+      ></app-movie-card>
+    </div>
+
+  </div>
+  <app-modal [isOpen]="isModalOpen" (close)="toggleModal()">
+    <app-movie-form
+      [movie]="selectedMovie"
+      (closeMovieForm)="toggleModal()"
+      (updateMovie)="updateSuccess()"
+      (addMovie)="addMovieSuccess()"
+    ></app-movie-form>
+  </app-modal>
+  <app-modal
+    [isOpen]="isMovieDetailsOpen"
+    (close)="toggleMovieDetails()"
+    title="Detalles de la pelicula"
+  >
+    <app-movie-details [movie]="selectedMovie"></app-movie-details>
+  </app-modal>
+  <app-confirm-dialog
+    [isOpen]="controls.isConfirmDialogOpen"
+    (confirm)="handleConfirmDelete()"
+    (cancel)="handleCancelDelete()"
+  ></app-confirm-dialog>
+
+  <app-alert-dialog
+    [isOpen]="controls.showAlert"
+    [type]="controls.alert.type"
+    [title]="controls.alert.title"
+    [message]="controls.alert.message"
+    [buttonText]="controls.alert.buttonText"
+    (close)="controls.showAlert = false"
+  />
+</main>

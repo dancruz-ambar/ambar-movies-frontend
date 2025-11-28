@@ -1,0 +1,110 @@
+<div>
+  <form [formGroup]="movieForm">
+    <div>
+      <label for="titulo">Titulo</label>
+      <input
+        type="text"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Titulo"
+        formControlName="title"
+      />
+    </div>
+    <div>
+      <label for="estreno">Estreno</label>
+      <input
+        type="date"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Estreno"
+        formControlName="releaseDate"
+      />
+    </div>
+    <div>
+      <label for="duracion">Duracion (minutos)</label>
+      <input
+        type="number"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Duracion"
+        formControlName="duration"
+      />
+    </div>
+    <div>
+      <label for="genero">Genero</label>
+      <input
+        type="text"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Genero"
+        formControlName="genre"
+      />
+    </div>
+    <div>
+      <label for="sinopsis">Sinopsis</label>
+      <input
+        type="text"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Sinopsis"
+        formControlName="description"
+      />
+    </div>
+    <div>
+      <label for="director">Director</label>
+      <input
+        type="text"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Director"
+        formControlName="director"
+      />
+    </div>
+    <div>
+      <label for="rating">Rating</label>
+      <input
+        type="number"
+        class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+        placeholder="Rating (0-10)"
+        formControlName="rating"
+        min="0"
+        max="10"
+      />
+    </div>
+    <div>
+      <label>Imagen</label>
+      <label for="imageInput" class="flex flex-row gap-4 items-center cursor-pointer group">
+        <img
+          [src]="imagePreview"
+          alt="Preview"
+          class="w-24 h-36 object-cover rounded-md border-2 border-gray-300 group-hover:border-sky-500 transition-colors"
+        />
+        <div
+          class="flex-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-md group-hover:border-sky-500 group-hover:bg-sky-50 transition-colors"
+        >
+          <span class="text-gray-500 group-hover:text-sky-600 text-sm mt-2"
+            >Seleccionar imagen</span
+          >
+        </div>
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+          class="hidden"
+        />
+      </label>
+    </div>
+    <div class="flex flex-row gap-4 mt-5">
+      <button
+        class="w-1/2 p-2 bg-red-500 text-white rounded-md cursor-pointer"
+        (click)="closeForm()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        [disabled]="movieForm.invalid"
+        (click)="isEditMode ? handleUpdateMovie() : handleAddNewMovie()"
+        class="w-1/2 p-2 text-white rounded-md cursor-pointer"
+        [ngClass]="{ 'bg-sky-200': movieForm.invalid, 'bg-sky-600': !movieForm.invalid }"
+      >
+        {{ isEditMode ? 'Guardar' : 'Agregar' }}
+      </button>
+    </div>
+  </form>
+</div>
