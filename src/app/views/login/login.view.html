@@ -1,0 +1,61 @@
+<main
+  class="w-full h-screen flex flex-col items-center justify-center bg-[url(/assets/images/background-login.jpg)] bg-cover bg-center"
+>
+  <div
+    *ngIf="sessionExpiredMessage"
+    class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4"
+  >
+    {{ sessionExpiredMessage }}
+  </div>
+  <div class="bg-white/95 rounded-md p-4 flex flex-col items-center justify-center">
+    <h1 class="text-3xl font-bold">Iniciar sesión</h1>
+    <form class="p-5 gap-8 flex flex-col" [formGroup]="loginForm">
+      <div>
+        <label class="text-xl" for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+          formControlName="email"
+        />
+      </div>
+      <div>
+        <label class="text-xl" for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Contraseña"
+          class="w-full p-2 border-2 border-gray-300 rounded-md bg-white"
+          formControlName="password"
+        />
+      </div>
+      <button
+        type="button"
+        [disabled]="loginForm.invalid"
+        (click)="login()"
+        class="w-full p-2 text-white rounded-md text-lg cursor-pointer"
+        [ngClass]="{
+          'bg-sky-200': loginForm.invalid,
+          'bg-sky-600 bg-sky-600 hover:bg-sky-700 transition-all duration-300': !loginForm.invalid
+        }"
+      >
+        Iniciar sesión
+      </button>
+    </form>
+    <p class="text-md text-gray-500">
+      ¿No tienes una cuenta?
+      <a href="#" class="text-sky-600 hover:text-sky-700 transition-all duration-300">Regístrate</a>
+    </p>
+  </div>
+  <app-alert-dialog
+    [isOpen]="controls.showAlert"
+    [type]="controls.alert.type"
+    [title]="controls.alert.title"
+    [message]="controls.alert.message"
+    [buttonText]="controls.alert.buttonText"
+    (close)="controls.showAlert = false"
+  />
+</main>

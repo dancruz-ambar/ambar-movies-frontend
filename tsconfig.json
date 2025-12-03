@@ -17,7 +17,8 @@
     "baseUrl": "./",
     "paths": {
       "@interfaces/*": ["src/interfaces/*"],
-      "@components/*": ["src/app/components/*"]
+      "@components/*": ["src/app/components/*"],
+      "@services/*": ["src/app/services/*"]
     }
   },
   "angularCompilerOptions": {
