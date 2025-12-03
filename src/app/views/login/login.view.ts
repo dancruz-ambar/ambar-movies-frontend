@@ -53,10 +53,15 @@ export class LoginView implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Session expired', sessionStorage.getItem('session_expired'));
     if (sessionStorage.getItem('session_expired')) {
       this.sessionExpiredMessage = 'La sesión ha expirado. Por favor, inicie sesión nuevamente.';
       sessionStorage.removeItem('session_expired');
+      this.cdr.detectChanges();
+    }
+    if (sessionStorage.getItem('user_registered')) {
+      this._showAlert('Success', 'Usuario registrado correctamente', 'success');
+      this.loginForm.reset();
+      sessionStorage.removeItem('user_registered');
       this.cdr.detectChanges();
     }
   }
@@ -74,10 +79,7 @@ export class LoginView implements OnInit {
   }
 
   public async login() {
-    console.log(this.loginForm.value);
-    if (!this.loginForm.valid) {
-      return;
-    }
+    if (!this.loginForm.valid) return;
 
     try {
       const payload = this._createPayload();
